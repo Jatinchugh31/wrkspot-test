@@ -13,5 +13,6 @@ public interface AddressMapper {
 
     @InheritInverseConfiguration
     @Mapping(target = "id",ignore = true)
+    @Mapping(target = "customer", ignore = true)
     Address toEntity(AddressDto dto);
 }

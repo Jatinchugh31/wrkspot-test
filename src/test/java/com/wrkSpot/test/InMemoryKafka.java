@@ -1,8 +1,6 @@
 package com.wrkSpot.test;
 
 import io.smallrye.reactive.messaging.memory.InMemoryConnector;
-import org.testcontainers.containers.KafkaContainer;
-import org.testcontainers.utility.DockerImageName;
 import io.quarkus.test.common.QuarkusTestResourceLifecycleManager;
 
 import java.util.HashMap;

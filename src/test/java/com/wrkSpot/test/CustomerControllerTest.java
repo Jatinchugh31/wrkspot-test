@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wrkspot.entity.Customer;
 import com.wrkspot.model.AddressDto;
 import com.wrkspot.model.CustomerDto;
-import com.wrkspot.repository.CustomerRepository;
 import com.wrkspot.resource.CustomerResource;
 import com.wrkspot.service.CustomerService;
 import io.quarkus.test.common.QuarkusTestResource;
@@ -16,20 +15,13 @@ import io.smallrye.reactive.messaging.memory.InMemorySink;
 import jakarta.enterprise.inject.Any;
 import jakarta.inject.Inject;
 import lombok.SneakyThrows;
-import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.common.serialization.StringDeserializer;
-import org.awaitility.Awaitility;
+
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.Duration;
 import java.util.*;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @QuarkusTest
