@@ -1,1 +1,79 @@
-{}
+"%test":
+  quarkus:
+    datasource:
+      db-kind: h2
+      jdbc:
+        url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;DATABASE_TO_LOWER=TRUE
+        driver: org.h2.Driver
+      username: sa
+      password: sa
+      reactive: false
+    hibernate-orm:
+      dialect: org.hibernate.dialect.H2Dialect
+      database:
+        generation: drop-and-create
+      log:
+        sql: true
+
+
+
+"%dev":
+  quarkus:
+    http:
+      port: 8094
+    transaction-manager:
+      default-transaction-timeout: 3600
+    datasource:
+      db.kind: postgresql
+      username: myusername
+      password: mypassword
+      jdbc:
+        url: jdbc:postgresql://localhost:5432/workSpot-db
+      hibernate:
+        default-schema: wrk_spot
+        ddl-generation: none
+  kafka:
+    bootstrap:
+      servers: localhost:9092
+    auto:
+      create:
+        topics:
+          enable: true
+
+
+
+quarkus:
+  flyway:
+    migrate-at-start: true
+    basel-version: 1.0.0
+    baseline-on-migrate: true
+    schemas: wrk_spot
+    create-schemas: true
+  hibernate-orm:
+    xml_mapping_enabled: true
+    physical-naming-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+    database:
+      generation: none
+    log:
+      format-sql: true
+      sql: true
+  swagger-ui:
+    always-include: true
+    enable: true
+  smallrye-openapi:
+    path: /q/openapi
+    app-path: /q/swagger-ui
+mp:
+    openapi:
+      extensions:
+        smallrye:
+          operationIdStrategy: METHOD
+    messaging:
+      outgoing:
+        customer-outbound:
+          kafka-configuration: kafkaConfig
+          connector: smallrye-kafka
+          topic: "work-spot-customer-created"
+          failure-strategy: fail
+          key.serializer: org.apache.kafka.common.serialization.StringSerializer
+          value.serializer: org.apache.kafka.common.serialization.StringSerializer

@@ -10,6 +10,14 @@ repositories {
 
 dependencies {
     implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
+
+    // ✅ Lombok
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
+    testCompileOnly 'org.projectlombok:lombok:1.18.30'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
+
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
     implementation 'io.quarkus:quarkus-rest'
     implementation 'io.quarkus:quarkus-hibernate-orm'
     implementation 'io.quarkus:quarkus-flyway'
@@ -21,20 +29,36 @@ dependencies {
     implementation 'io.quarkiverse.wiremock:quarkus-wiremock:1.5.0'
     implementation 'io.quarkus:quarkus-jdbc-postgresql'
     implementation 'io.quarkus:quarkus-arc'
+    implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+    implementation 'io.quarkus:quarkus-smallrye-openapi'
+
+    // ✅ Test dependencies
+    testImplementation 'org.testcontainers:junit-jupiter:1.19.7'
+    testImplementation 'org.testcontainers:kafka:1.19.7'
+    testImplementation 'io.quarkus:quarkus-test-common'
     testImplementation 'io.quarkus:quarkus-junit5'
+    testImplementation 'com.h2database:h2:2.3.232'
+    testImplementation 'io.quarkiverse.mockk:quarkus-junit5-mockk:3.0.0'
+    testImplementation 'org.wiremock:wiremock:3.12.0'
+    testImplementation 'io.rest-assured:rest-assured'
+    testImplementation 'io.quarkus:quarkus-jacoco'
+    testImplementation 'org.awaitility:awaitility:4.2.0'      // wait for Kafka msg
+    testImplementation 'io.smallrye.reactive:smallrye-reactive-messaging-in-memory:4.27.0'
 }
 
-group 'com.wrkspot'
-version '1.0.0-SNAPSHOT'
+group = 'com.wrkspot'
+version = '1.0.0-SNAPSHOT'
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 test {
     systemProperty "java.util.logging.manager", "org.jboss.logmanager.LogManager"
 }
+
 compileJava {
     options.encoding = 'UTF-8'
     options.compilerArgs << '-parameters'
