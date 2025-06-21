@@ -28,7 +28,7 @@
       username: myusername
       password: mypassword
       jdbc:
-        url: jdbc:postgresql://localhost:5432/workSpot-db
+        url: jdbc:postgresql://localhost:5432/wrkSpot-db
       hibernate:
         default-schema: wrk_spot
         ddl-generation: none

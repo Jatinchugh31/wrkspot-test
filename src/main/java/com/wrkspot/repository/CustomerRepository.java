@@ -24,4 +24,7 @@ public class CustomerRepository  implements PanacheRepositoryBase<Customer, UUID
     }
 
 
+    public boolean customerPresent(String customerId) {
+     return  find("customerId", customerId).list().stream().findAny().isPresent();
+    }
 }

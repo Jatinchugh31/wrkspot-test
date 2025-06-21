@@ -1,5 +1,10 @@
 package com.wrkspot.model;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,11 +19,17 @@ import java.util.List;
 @AllArgsConstructor
 public class CustomerDto {
 
+	@NotBlank
 	private String firstName;
+	@NotBlank
 	private String lastName;
+	@NotNull
 	private Double spendingLimit;
-	private List<AddressDto> addresses;
+	@NotEmpty
+	private List<@Valid AddressDto> addresses;
+	@NotBlank
 	private String mobileNumber;
+	@NotBlank
 	private String customerId;
 	private int age;
 

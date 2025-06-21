@@ -5,6 +5,7 @@ import com.wrkspot.model.CustomerDto;
 import com.wrkspot.model.PagedResponse;
 import com.wrkspot.service.CustomerService;
 import jakarta.inject.Inject;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -22,7 +23,7 @@ public class CustomerResource {
     CustomerService customerService;
 
     @POST
-    public Response create(CustomerDto dto) {
+    public Response create(@Valid CustomerDto dto) {
         CustomerDto saved = customerService.create(dto);
         return Response.status(Response.Status.CREATED).entity(saved).build();
     }

@@ -12,6 +12,7 @@ import io.quarkus.panache.common.Parameters;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.constraints.NotBlank;
 import lombok.extern.jbosslog.JBossLog;
 import org.apache.commons.lang3.StringUtils;
 
@@ -38,6 +39,10 @@ public class CustomerService {
         log.infof("CustomerService::create >>> enter");
         log.debugf("with customerDto = %s ", customerDto);
         try {
+            if(validateCustomerExist(customerDto.getCustomerId())){
+                 log.errorf("CustomerService::create: Customer %s already exist", customerDto.getCustomerId());
+                return customerDto;
+            }
             Customer customer = customerMapper.toEntity(customerDto);
             customerRepository.persist(customer);
             customerKafkaProducer.send(customer);  // TODO do we need to rollback transaction if kafka failed to send ??
@@ -47,6 +52,10 @@ public class CustomerService {
             log.errorf("CustomerService::create >>> %s", e.getMessage());
             throw e;
         }
+    }
+
+    private boolean validateCustomerExist(String customerId) {
+     return customerRepository.customerPresent(customerId);
     }
 
     public PagedResponse<CustomerDto> findCustomers(String name, String city, String state, int size, int page) {

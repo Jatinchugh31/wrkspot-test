@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS "wrk_spot"."customer" (
     last_name      VARCHAR(255),
     spending_limit NUMERIC,
     mobile_number  VARCHAR(20),
-    customer_id    VARCHAR(50),
+    customer_id    VARCHAR(50) NOT NULL UNIQUE ,
     age            INTEGER
     );
 
